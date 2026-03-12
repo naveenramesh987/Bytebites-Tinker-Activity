@@ -1,6 +1,38 @@
 # ByteBites Final UML Design
 
-## Revised Class Diagram
+## UML Class Diagram (ASCII)
+
+```text
++---------------------------+            +--------------------------------+
+|         Customer          |            |          Transaction           |
++---------------------------+            +--------------------------------+
+| +name: String             |1        0..*| +selectedItems: List<FoodItem> |
+| +purchaseHistory:         |----------->| +addItem(item: FoodItem): void |
+|   List<Transaction>       | has history| +calculateTotalCost(): Decimal |
+| +addTransaction(          |            +--------------------------------+
+|   transaction: Transaction)|                        |
+|   : void                  |                     1..* (contains)
+| +isVerified(): bool       |                        v
++---------------------------+               +-----------------------------+
+  . . . . . . . . . . . . . . . . . . . .  |          FoodItem           |
+  . browses                                  +-----------------------------+
+  .                                          | +name: String               |
+  v                                          | +price: Decimal             |
++---------------------------+                | +category: String           |
+|         Inventory         |1           0..*| +popularityRating: float    |
++---------------------------+*-------------->|                             |
+| +items: List<FoodItem>    |   manages      +-----------------------------+
+| +addItem(item: FoodItem): |
+|   void                    |
+| +getAllItems():           |
+|   List<FoodItem>          |
+| +filterByCategory(        |
+|   category: String):      |
+|   List<FoodItem>          |
++---------------------------+
+```
+
+## Mermaid Source (Preview)
 
 ```mermaid
 classDiagram
@@ -36,9 +68,3 @@ classDiagram
     Transaction "1" *-- "1..*" FoodItem : contains
     Customer ..> Inventory : browses
 ```
-
-## Comparison to Prior Draft
-
-- Keeps exactly the four requested classes with the original required relationships preserved.
-- Removes extra helper methods and constructors so behavior stays strictly within the feature request scope.
-- Uses explicit visibility and typed signatures in Mermaid `classDiagram`, reflecting a focused design-agent style instead of broader “helpful extras.”
